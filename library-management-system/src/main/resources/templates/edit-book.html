@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Book</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        input, select, button {
+            margin: 8px 0;
+            padding: 6px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Edit Book</h1>
+
+    <form th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post">
+        <label>Title:</label>
+        <input type="text" th:field="*{title}" required /><br>
+
+        <label>Author:</label>
+        <input type="text" th:field="*{author}" required /><br>
+
+        <label>ISBN:</label>
+        <input type="text" th:field="*{isbn}" required /><br>
+
+        <label>Assigned User:</label>
+        <select th:field="*{user.id}">
+            <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.name}" 
+                th:selected="${user.id} == ${book.user?.id}">
+            </option>
+        </select><br>
+
+        <button type="submit">Save Changes</button>
+        <a href="/" style="margin-left: 10px;">Cancel</a>
+    </form>
+</body>
+</html>
